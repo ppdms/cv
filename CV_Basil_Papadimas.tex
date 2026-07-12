@@ -1,0 +1,267 @@
+%-------------------------
+% Resume in Latex
+% Author : Basil Papadimas
+% Based on Jake's Resume template
+% from https://github.com/jakegut/resume
+% License : MIT
+%------------------------
+
+\documentclass[a4paper,11pt]{article}
+
+%------------------------------------------------------------------------------
+%  Preamble & Packages
+%------------------------------------------------------------------------------
+
+\usepackage{fontspec}
+% All fonts are vendored in ./fonts/ (Inter 4.001 statics)
+\setmainfont{Inter-Regular.ttf}[Path=./fonts/, BoldFont=Inter-Bold.ttf, Scale=1.0]
+\newfontfamily\companyfont{Inter-SemiBold.ttf}[Path=./fonts/, Scale=1.0]
+\newfontfamily\rolefont{Inter-Medium.ttf}[Path=./fonts/, Scale=1.0]
+\newfontfamily\namefont{InterDisplay-Regular.ttf}[Path=./fonts/, Scale=1.0, LetterSpace=3]
+\newfontfamily\labelfont{Inter-SemiBold.ttf}[Path=./fonts/, Scale=1.0, LetterSpace=10]
+% footskip puts the ppdms.gr/cv footer baseline ~centered in the bottom margin
+\usepackage[margin=0.5in, top=0.5in, footskip=15pt]{geometry}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{verbatim}
+\usepackage{enumitem} % Essential for precise list spacing control
+\usepackage[hidelinks]{hyperref}
+\usepackage{fontawesome5} % grayscale contact icons in the header
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage[stretch=20,shrink=20,protrusion=true,expansion=true]{microtype}
+
+\definecolor{appleblack}{HTML}{1D1D1F} % primary text
+\definecolor{applegray}{HTML}{6E6E73}  % secondary text (dates, stacks, labels)
+\definecolor{applerule}{HTML}{D2D2D7}  % hairline dividers
+\definecolor{appleblue}{HTML}{0066CC}  % links
+
+%------------------------------------------------------------------------------
+%  General Formatting
+%------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+% The ppdms.gr/cv link lives in the page's footer region (bottom margin)
+\fancyfoot[C]{\small\href{https://ppdms.gr/cv}{\rolefont\color{appleblue}ppdms.gr/cv}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\urlstyle{same}
+
+\raggedbottom
+% No global alignment: headers/titles set \raggedright locally; bullets are
+% justified so full lines land on the same right rule as the date column.
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{0in}
+
+%------------------------------------------------------------------------------
+%  Section Formatting
+%------------------------------------------------------------------------------
+
+% Section title formatting
+\newcommand{\projectsectiontitle}[1]{%
+  \MakeUppercase{#1} \hfill {\normalfont\footnotesize\color{applegray}for more projects: \href{https://github.com/ppdms?tab=repositories}{\color{appleblue}GitHub}}%
+}
+% Gray tracked-caps eyebrow over a hairline rule
+\titleformat{\section}{
+ \raggedright\footnotesize\labelfont\color{applegray}
+}{}{0em}{\MakeUppercase}[{\color{applerule}\titlerule[0.6pt]}]
+
+\titlespacing*{\section}{0pt}{14pt plus 2pt minus 2pt}{6pt plus 1pt minus 1pt}
+
+
+%------------------------------------------------------------------------------
+%  Custom Commands & Lists
+%------------------------------------------------------------------------------
+
+% Define a clean environment for bullet lists with precise spacing
+% Adjust 'itemsep' to control space between bullets. 1.5pt is tight but breathing.
+% Hanging indent: the dash sits in the left gutter as a scan anchor and
+% wrapped lines align with the text — that shape is what keeps bullets
+% distinguishable. Text is justified (full lines align to the page's right
+% rule, same as the dates) but never hyphenated; microtype's font expansion
+% absorbs the spacing adjustment. If a line ever turns gappy, reword it.
+\newenvironment{resumeitemize}{
+  \begin{itemize}[label={\color{applegray}--}, leftmargin=0.15in, itemsep=2.5pt, topsep=0pt, parsep=0pt, partopsep=0pt]
+  \hyphenpenalty=10000\exhyphenpenalty=10000
+  \tolerance=2000 \emergencystretch=1em
+}{
+  \end{itemize}\vspace{-3pt}
+}
+
+% Line ends must be %-protected: an unprotected newline leaves a trailing
+% space in the bullet paragraph, and when the last line is flush-full TeX is
+% forced to break at that space — yielding a phantom zero-height extra line.
+\newcommand{\resumeItem}[1]{%
+ \item\small{%
+  {#1}%
+ }%
+}
+
+\newcommand{\resumeSubheading}[4]{
+ \vspace{1pt}\item
+  \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r@{\hspace{-0.02\textwidth}}}
+   {\companyfont #1} & {\small\color{applegray}#2} \\
+   {\small #3} & {\small\color{applegray}#4} \\
+  \end{tabular*}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+  \vspace{-6pt}\item
+  \begin{tabular*}{0.98\textwidth}{l@{\extracolsep{\fill}}r@{\hspace{-0.02\textwidth}}}
+   {\small\color{applegray}#1} & {\small\color{applegray}#2} \\
+  \end{tabular*}
+}
+
+% Compact experience entry: title + company on one line, tech stack + location on the next.
+% Args: {title}{company}{dates}{tech stack}{location}
+\newcommand{\resumeExperience}[5]{
+ \vspace{1pt}\item
+  \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r@{\hspace{-0.02\textwidth}}}
+   {\rolefont #1}\hspace{0.35em}{\color{applegray}·}\hspace{0.35em}{\companyfont #2} & {\small\color{applegray}#3} \\
+   {\small\color{applegray}#4} & {\small\color{applegray}#5} \\
+  \end{tabular*}
+}
+
+% Vertical separator keyed to the cap height of the current font.
+\newlength{\projsepht}
+\newcommand{\projsep}{%
+  \settoheight{\projsepht}{X}%
+  \hspace{0.45em}{\color{applerule}\rule[-0.2\projsepht]{0.7pt}{1.4\projsepht}}\hspace{0.45em}%
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+  \item
+  \begin{tabular*}{0.98\textwidth}{l@{\extracolsep{\fill}}r@{\hspace{-0.02\textwidth}}}
+   \small#1 & #2 \\
+  \end{tabular*}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$-$}}$}
+
+% Main grouping list (for Experiences/Projects containers)
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}, itemsep=4pt]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+
+% Bullet points list (using the new clean environment)
+\newcommand{\resumeItemListStart}{\begin{resumeitemize}}
+\newcommand{\resumeItemListEnd}{\end{resumeitemize}}
+
+
+%-------------------------------------------
+%%%%%% RESUME STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\color{appleblack}
+
+%----------PDF METADATA----------
+\hypersetup{
+  pdftitle={Basil Papadimas - Résumé},
+  pdfauthor={Basil Papadimas},
+  pdfsubject={Résumé of Basil Papadimas}
+}
+
+%----------HEADING----------
+\noindent
+\begin{minipage}[c]{0.44\textwidth}
+  \raggedright
+  {\namefont\fontsize{26}{28}\selectfont Basil Papadimas}
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.55\textwidth}
+  \footnotesize\color{applegray}
+  \raggedleft
+  \href{tel:+306934012409}{{\fontsize{8}{8}\selectfont\raisebox{0.25pt}[0pt][0pt]{\faPhone}}\hspace{0.4em}+30~693~401~2409}
+  \hspace{0.9em}
+  \href{mailto:papadimas@pm.me}{{\fontsize{8}{8}\selectfont\raisebox{-0.4pt}[0pt][0pt]{\faEnvelope}}\hspace{0.4em}papadimas@pm.me} \\[3pt]
+  \href{https://linkedin.com/in/ppdms}{\raisebox{0pt}[0pt][0pt]{\faLinkedinIn}\hspace{0.4em}linkedin.com/in/ppdms}
+  \hspace{0.9em}
+  \href{https://github.com/ppdms}{\raisebox{0pt}[0pt][0pt]{\faGithub}\hspace{0.4em}github.com/ppdms}
+  \hspace{0.9em}
+  \href{https://ppdms.gr}{\raisebox{0pt}[0pt][0pt]{\faGlobe}\hspace{0.4em}ppdms.gr}
+\end{minipage}
+
+%-----------EDUCATION-----------
+\section{education}
+\resumeSubHeadingListStart
+\resumeSubheading
+{Athens University of Economics and Business}{Athens, Greece}
+{BSc Computer Science, GPA: 9.4/10}{Oct. 2022 -- Feb. 2027}
+\resumeItemListStart
+\resumeItem{Selected for Erasmus+ semester at TUM Informatics (Technical University of Munich).}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+
+%-----------EXPERIENCE-----------
+\section{experience}
+\resumeSubHeadingListStart
+
+\resumeExperience
+{AI \& Process Automation Specialist}{Viva.com}{Jul. 2026 -- Present}
+{Microsoft Power Platform, Camunda, OpenAI Codex, Anthropic Claude}{Athens, Greece}
+\resumeItemListStart
+\resumeItem{At Viva.com, I was hired by and work under the COO. My mission is to design and implement AI-driven solutions to automate manual processes and improve operational efficiency within the Organizational Effectiveness team.}
+\resumeItemListEnd
+
+\resumeExperience
+{Software Engineer Intern}{Cloudflare}{Apr. 2026 -- Jul. 2026}
+{TypeScript, Cloudflare Workers, Clickhouse, Kubernetes, GraphQL}{Lisbon, Portugal}
+\resumeItemListStart
+\resumeItem{Improved the backend of Cloudflare Radar. Optimized the execution of massive queries, ensuring that even the most demanding historical queries, which routed to tens of billions of rows, load reliably and accurately.}
+\resumeItem{Increased the cacheability of queries that depend on the massive Clickhouse Data Lake. Divided API queries into groups of cached canonically-aligned chunks, so that overlapping queries reuse previous results.}
+\resumeItem{Created a cache invalidation system to allow editors to refresh cached public pages when changing annotations affixed to charts, to prevent stale data from being visible.}
+\resumeItemListEnd
+
+\resumeExperience
+{Software Engineer Intern}{NOKIA}{Apr. 2025 -- Mar. 2026}
+{Python, Flask, Vue.js, Bootstrap, Docker, MariaDB, InfluxDB, SNMP, REST}{Athens, Greece}
+\resumeItemListStart
+\resumeItem{Developed a web application for monitoring and management of lab infrastructure (Linux/Windows servers, network switches, and electrical equipment). Interfaced with Zabbix and phpIPAM.}
+\resumeItem{Built Jenkins pipelines and Ansible playbooks to automate metrics collection, speeding it up 10-100x with asynchronous polling, request batching, and an optimized database schema and queries.}
+\resumeItem{Created Grafana and Metabase dashboards to identify trends, which drove executive decisions.}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\titleformat{\section}{\raggedright\footnotesize\labelfont\color{applegray}}{}{0em}{\projectsectiontitle}[{\color{applerule}\titlerule[0.6pt]}]
+\section{projects}
+\titleformat{\section}{\raggedright\footnotesize\labelfont\color{applegray}}{}{0em}{\MakeUppercase}[{\color{applerule}\titlerule[0.6pt]}]
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{{\companyfont SqueezeTrOCR}\projsep{\color{applegray}Python, PyTorch, Transformers, Modal, OpenCV, Hugging Face}}{}
+\resumeItemListStart
+\resumeItem{Developed an OCR pipeline for TROGS-26, the ICDAR 2026 Competition in Text Recognition on Greek Squeezes, fine-tuning a dual-light TrOCR model that packs raking-light relief scans into a single RGB tensor.}
+\resumeItem{Engineered a character-posterior lattice decoding layer using an adaptive-order Prediction by Partial Matching character language model, reaching a 7.9\% Character Error Rate (CER) under the official contest scorer.}
+\resumeItem{Achieved the best results among 150 students in my university Data Science class with this task assignment.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{{\companyfont tree-eclass}\projsep{\color{applegray}Python, FastAPI, SQLite, Docker, BeautifulSoup, WebDAV, Jinja2, JavaScript}}{}
+\resumeItemListStart
+\resumeItem{Built a web service to monitor the webpages of my university courses, automatically authenticating to sync lecture files, announcements, and exercises. Engineered a recursive change-detection pipeline, version archiving, notifications, and visual PDF diffs.}
+\resumeItemListEnd
+
+\resumeProjectHeading
+{{\companyfont ESP32 RS-232 Virtual Printer}\projsep{\color{applegray}C++, ESP32, FreeRTOS, PlatformIO, SMTP}}{}
+\resumeItemListStart
+\resumeItem{Engineered firmware to bridge legacy RS-232 print streams to email over WiFi, using a dual-core task model, PSRAM-backed buffering, automatic WiFi/NTP recovery, and retry-safe queue handling to minimize data loss.}
+\resumeItemListEnd
+
+
+\resumeSubHeadingListEnd
+
+%-----------ACCOMPLISHMENTS-----------
+\section{accomplishments}
+\resumeItemListStart
+\resumeSubItem{One of three Greek students selected to compete at the European Huawei Seeds for the Future startup competition in Rome, Italy (2024). Learned about technology and entrepreneurship from industry leaders.}
+\resumeSubItem{Selected for \href{https://www.cty-greece.gr/}{\color{appleblue}{CTY Greece}}, affiliated with the Johns Hopkins Center for Talented Youth (CTY).}
+\resumeSubItem{Received a scholarship to spend a year as a HS exchange student in Italy from \href{https://afs.org.gr}{\color{appleblue}{AFS Greece}}.}
+\resumeSubItem{Cambridge Certificate of Proficiency in English -- C2 -- Grade A (222/230, 2019).}
+\resumeItemListEnd
+
+%-------------------------------------------
+\end{document}

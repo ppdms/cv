@@ -1,0 +1,34 @@
+# Operating system clutter
+.DS_Store
+
+# LaTeX build artefacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.log
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+
+# latexmk caches
+*.latexmk
+
+# Local build directories
+build/
+
+# these are troublesome
+.wrangler/
+node_modules/
+.smbdelete*
+.vscode

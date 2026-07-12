@@ -1,0 +1,4 @@
+Inter font family, extracted from Inter.ttc (nixpkgs inter-4.1).
+Copyright: Copyright 2016 The Inter Project Authors
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL
+http://scripts.sil.org/OFL
